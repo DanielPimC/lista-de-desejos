@@ -62,7 +62,7 @@ export const WishlistScreen = () => {
                         <Pressable style={{ marginTop: 10 }} onPress={() => {
                                 deleteWishlist(product.produtoId)
                             }}>
-                            <Text>Remover da lista de desejos</Text>
+                            <Text style={styles.textRemove}>Remover da lista de desejos</Text>
                         </Pressable>
                     </View>
             )})}
@@ -83,5 +83,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 6,
         borderBottomLeftRadius: 6,
         borderBottomRightRadius: 6
+    },
+    textRemove: {
+        color: 'red'
     }
 })

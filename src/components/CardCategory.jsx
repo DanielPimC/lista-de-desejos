@@ -22,13 +22,14 @@ export const CardCategory = ({ infoCategory }) => {
 const styles = StyleSheet.create({
     mainContainer: {
         justifyContent: 'center',
+        textAlign: 'center',
         backgroundColor: '#ffffff',
         padding: 15,
         margin: 14,
         borderTopLeftRadius: 6,
         borderTopRightRadius: 6,
         borderBottomLeftRadius: 6,
-        borderBottomRightRadius: 6
+        borderBottomRightRadius: 6,
     },
     textTitle: {
         fontSize: 20,

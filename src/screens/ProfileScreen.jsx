@@ -22,8 +22,8 @@ export const ProfileScreen = () => {
 
     return(
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text>{data.name}</Text>
-            <Text>{data.email}</Text>
+            <Text>Nome: {data.name}</Text>
+            <Text>Email: {data.email}</Text>
         </View>
     ) 
 }

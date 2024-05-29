@@ -1,69 +1,73 @@
-import { View, Text, StyleSheet, Pressable } from "react-native"; 
+import { View, Text, StyleSheet, Pressable, Image } from "react-native"; 
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 export const ProductsScreen = ({ route }) => {
-    const [email, setEmail] = useState('')
-    const [products, setProducts] = useState([])
-    const infoCategory = route.params.infoCategory
+    const [email, setEmail] = useState('');
+    const [products, setProducts] = useState([]);
+    const infoCategory = route.params.infoCategory;
 
     useEffect(() => {
-        getEmail()
-    }, [])
+        getEmail();
+    }, []);
 
     useEffect(() => {
-        getProduct()
-    }, [email])
+        if (email) {
+            getProduct();
+        }
+    }, [email]);
 
     const getEmail = async () => {
         try {
-            const value = await AsyncStorage.getItem('email')
-            setEmail(value)
-        } catch(error){
-          console.error(error)  
+            const value = await AsyncStorage.getItem('email');
+            if (value) {
+                setEmail(value);
+            }
+        } catch (error) {
+            console.error(error);
         }
-    }
+    };
 
     const getProduct = async () => {  
         try {
-            const result = await axios.get(`https://listadesejo.azurewebsites.net/api/produtos/${infoCategory.categoriaId}/${email}`)
-            if(!result){
-                throw new Error('Nenhum produto encontrado')
+            const result = await axios.get(`https://listadesejo.azurewebsites.net/api/produtos/${infoCategory.categoriaId}/${email}`);
+            if (!result) {
+                throw new Error('Nenhum produto encontrado');
             }
-            setProducts(result.data)
-        }catch(error){  
-            console.error(error.message)
+            setProducts(result.data);
+        } catch (error) {  
+            console.error(error.message);
         }
-    }
+    };
 
     const postWishlist = async (productId) => {
         try {
-            await axios.post(`https://listadesejo.azurewebsites.net/api/listadesejo/${productId}/${email}`)
-        }catch(error){  
-            console.error(error.message)
+            await axios.post(`https://listadesejo.azurewebsites.net/api/listadesejo/${productId}/${email}`);
+        } catch (error) {  
+            console.error(error.message);
         }
-    }
+    };
 
-    return(
+    return (
         <View>
             {products.map((product) => (
-                <View style={styles.mainContainer}>
+                <View style={styles.mainContainer} key={product.produtoId}>
                     <View>
-                        <Text>{product.urlImagem}</Text>
+                        <Image source={{ uri: product.urlImagem }} style={styles.image} />
                         <Text>{product.nome}</Text>
                         <View>
                             <Text>Preço: {product.preco}</Text>
                         </View>
                     </View>
-                    <Pressable style={{ marginTop: 10 }} onPress={() => (postWishlist(product.produtoId))}>
+                    <Pressable style={{ marginTop: 10 }} onPress={() => postWishlist(product.produtoId)}>
                         <Text>Adicionar a lista de desejos</Text>
                     </Pressable>
                 </View>
             ))}
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -75,5 +79,10 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 6,
         borderBottomLeftRadius: 6,
         borderBottomRightRadius: 6
+    },
+    image: {
+        width: 100,
+        height: 100,
+        marginBottom: 10
     }
-})
+});

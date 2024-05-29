@@ -40,7 +40,7 @@ export const SingupComponent = () => {
                 </Pressable>
             </View>
             <View>
-              <Text>Já possui uma conta?</Text>
+              <Text style={styles.textAccount}>Já possui uma conta?</Text>
               <Pressable style={styles.button} onPress={() => navigation.navigate('LoginComponent')}>
                 <Text style={styles.buttonText}>Login</Text>
               </Pressable>
@@ -93,5 +93,9 @@ const styles = StyleSheet.create({
     buttonView :{
       width :"100%",
       paddingHorizontal : 40
+    },
+    textAccount :{
+      paddingTop: 40,
+      paddingBottom: 10,
     },
   })
